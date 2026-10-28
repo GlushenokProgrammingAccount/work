@@ -1,5 +1,5 @@
 REPORT = report.md
-FILTERS = --filter pandoc-crossref --citeproc
+FILTERS = --filter pandoc-crossref
 OPTIONS = --number-sections
 PDF_ENGINE = --pdf-engine=xelatex
 
