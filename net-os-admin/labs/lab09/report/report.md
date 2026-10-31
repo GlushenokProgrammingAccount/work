@@ -241,3 +241,8 @@ doveadm — утилита для управления почтовым серв
 # Выводы
 
 В ходе выполнения лабораторной работы № 9 мне удалось приобрести практические навыки по установке и простейшему конфигурированию POP3/IMAP-сервера.
+
+# Список литературы 
+
+1. Dovecot Documentation. — URL: https : / / dovecot . org / documentation (дата обращения: 31/10/2026).
+2. Postfix Documentation. — URL: http://www.postfix.org/documentation.html (дата обращения: 31/10/2026).

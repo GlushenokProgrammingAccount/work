@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Глушенок А. А.">
+  <title>Лабораторная работа № 9. Настройка POP3/IMAP сервера</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/beige.css" id="theme">
+  
+  
+  
+  
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Лабораторная работа № 9. Настройка POP3/IMAP
+сервера</h1>
+  <p class="subtitle">Презентация</p>
+  <p class="author">Глушенок А. А.</p>
+  <p class="institute">Российский университет дружбы народов, Москва,
+Россия</p>
+  <p class="date">28 октября 2026</p>
+</section>
+
+<section>
+<section id="информация" class="title-slide slide level1">
+<h1>Информация</h1>
+
+</section>
+<section id="докладчик" class="slide level2">
+<h2>Докладчик</h2>
+<div class="columns" data-align="center">
+<div class="column" style="width:70%;">
+<ul>
+<li>Глушенок Анна Александровна</li>
+<li>Студент НПИбд-01-24</li>
+<li>Российский университет дружбы народов</li>
+<li><a href="mailto:1132246844@pfur.ru">1132246844@pfur.ru</a></li>
+</ul>
+</div><div class="column" style="width:30%;">
+
+</div>
+</div>
+</section>
+<section id="цель-работы" class="slide level2">
+<h2>Цель работы</h2>
+<p>Приобретение практических навыков по установке и простейшему
+конфигурированию POP3/IMAP-сервера.</p>
+</section>
+<section id="задание" class="slide level2">
+<h2>Задание</h2>
+<ol type="1">
+<li>Установите на ВМ server Dovecot и Telnet для дальнейшей проверки
+корректности работы почтового сервера.</li>
+<li>Настройте Dovecot.</li>
+<li>Установите на ВМ client программу для чтения почты Evolution и
+настройте её для манипуляций с почтой вашего пользователя. Проверьте
+корректность работы почтового сервера как с ВМ server, так и с ВМ
+client.</li>
+<li>Измените скрипт для Vagrant, фиксирующий действия по установке и
+настройке Postfix и Dovecote во внутреннем окружении ВМ server, создайте
+скрипт для Vagrant, фиксирующий действия по установке Evolution во
+внутреннем окружении ВМ client. Соответствующим образом внесите
+изменения в Vagrantfile.</li>
+</ol>
+</section></section>
+<section id="выполнение-лабораторной-работы"
+class="title-slide slide level1">
+<h1>Выполнение лабораторной работы</h1>
+
+</section>
+
+<section>
+<section id="установка-dovecot" class="title-slide slide level1">
+<h1>Установка Dovecot</h1>
+
+</section>
+<section id="установка-dovecot-1" class="slide level2">
+<h2>Установка Dovecot</h2>
+<p>Запускаем ВМ server.</p>
+<figure id="fig:001">
+<img data-src="image/1.PNG" style="width:60.0%"
+alt="Figure 1: запуск ВМ server" />
+<figcaption aria-hidden="true">Figure 1: запуск ВМ server</figcaption>
+</figure>
+</section>
+<section id="установка-dovecot-2" class="slide level2">
+<h2>Установка Dovecot</h2>
+<p>Подключаемся к ВМ servsr по SSH, переходим к суперпользователю.</p>
+<figure id="fig:002">
+<img data-src="image/2.PNG" style="width:60.0%"
+alt="Figure 2: переход к суперпользователю" />
+<figcaption aria-hidden="true">Figure 2: переход к
+суперпользователю</figcaption>
+</figure>
+</section>
+<section id="установка-dovecot-3" class="slide level2">
+<h2>Установка Dovecot</h2>
+<p>Устанавливаем необходимые для работы пакеты: dovecot и telnet.</p>
+<figure id="fig:003">
+<img data-src="image/3.PNG" style="width:60.0%"
+alt="Figure 3: установка dovecot" />
+<figcaption aria-hidden="true">Figure 3: установка dovecot</figcaption>
+</figure>
+</section></section>
+<section>
+<section id="настройка-dovecot" class="title-slide slide level1">
+<h1>Настройка dovecot</h1>
+
+</section>
+<section id="настройка-dovecot-1" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>В конфигурационном файле /etc/dovecot/dovecot.conf прописываем список
+почтовых протоколов, по которым разрешено работать Dovecot: imap и
+pop3.</p>
+<figure id="fig:004">
+<img data-src="image/4.PNG" style="width:60.0%"
+alt="Figure 4: добавление протоколов imap, pop3" />
+<figcaption aria-hidden="true">Figure 4: добавление протоколов imap,
+pop3</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-2" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>В конфигурационном файле /etc/dovecot/conf.d/10-auth.conf указываем
+метод аутентификации plain.</p>
+<figure id="fig:005">
+<img data-src="image/5.PNG" style="width:60.0%"
+alt="Figure 5: указание метода аунтификации plain" />
+<figcaption aria-hidden="true">Figure 5: указание метода аунтификации
+plain</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-3" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>В этом же конфигурационном файле отключаем защиту паролей. Параметр
+по умолчанию - yes.</p>
+<figure id="fig:006">
+<img data-src="image/6.PNG" style="width:60.0%"
+alt="Figure 6: отключение защиты паролей: значение по умолчанию" />
+<figcaption aria-hidden="true">Figure 6: отключение защиты паролей:
+значение по умолчанию</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-4" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>Заменяем его на no.</p>
+<figure id="fig:007">
+<img data-src="image/7.PNG" style="width:60.0%"
+alt="Figure 7: отключение защиты паролей: обновленное значение" />
+<figcaption aria-hidden="true">Figure 7: отключение защиты паролей:
+обновленное значение</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-5" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>В конфигурационном файле /etc/dovecot/conf.d/auth-system.conf.ext для
+поиска пользователей указываем pam.</p>
+<figure id="fig:008">
+<img data-src="image/8.PNG" style="width:60.0%"
+alt="Figure 8: поиск пользователей: pam" />
+<figcaption aria-hidden="true">Figure 8: поиск пользователей:
+pam</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-6" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>В этом же конфигурационном файле для поиска паролей указываем файл
+passwd.</p>
+<figure id="fig:039">
+<img data-src="image/39.PNG" style="width:60.0%"
+alt="Figure 9: поиск паролей: passwd" />
+<figcaption aria-hidden="true">Figure 9: поиск паролей:
+passwd</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-7" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>В конфигурационном файле /etc/dovecot/conf.d/10-mail.conf указываем
+каталог Maildir как место расположения почтовых ящиков.</p>
+<figure id="fig:009">
+<img data-src="image/9.PNG" style="width:60.0%"
+alt="Figure 10: настройка расположения почтовых ящиков" />
+<figcaption aria-hidden="true">Figure 10: настройка расположения
+почтовых ящиков</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-8" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>В Postfix указываем Maildir как каталог для доставки почты.</p>
+<figure id="fig:011">
+<img data-src="image/11.PNG" style="width:60.0%"
+alt="Figure 11: задание каталога для доставки почты, проверка" />
+<figcaption aria-hidden="true">Figure 11: задание каталога для доставки
+почты, проверка</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-9" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>Просматривам список доступных для работы служб.</p>
+<figure id="fig:012">
+<img data-src="image/12.PNG" style="width:60.0%"
+alt="Figure 12: вывод списка доступных служб" />
+<figcaption aria-hidden="true">Figure 12: вывод списка доступных
+служб</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-10" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>Разрешаем работу служб протоколов POP3 и IMAP в зоне по
+умолчанию.</p>
+<figure id="fig:013">
+<img data-src="image/13.PNG" style="width:60.0%"
+alt="Figure 13: открытие почтовых портов в зоне по умолчанию" />
+<figcaption aria-hidden="true">Figure 13: открытие почтовых портов в
+зоне по умолчанию</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-11" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>Разрешаем работу служб протоколов POP3 и IMAP во внутренней зоне.</p>
+<figure id="fig:014">
+<img data-src="image/14.PNG" style="width:60.0%"
+alt="Figure 14: открытие почтовых портов во внутренней зоне" />
+<figcaption aria-hidden="true">Figure 14: открытие почтовых портов во
+внутренней зоне</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-12" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>Просматривам список доступных для работы служб, видим, что в нем
+появились imap и pop3 (а так же imaps и pop3s).</p>
+<figure id="fig:015">
+<img data-src="image/15.PNG" style="width:60.0%"
+alt="Figure 15: вывод списка активных служб" />
+<figcaption aria-hidden="true">Figure 15: вывод списка активных
+служб</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-13" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>Восстанавливаем контекст безопасности в SELinux.</p>
+<figure id="fig:016">
+<img data-src="image/16.PNG" style="width:60.0%"
+alt="Figure 16: восстановление контекста безопасности" />
+<figcaption aria-hidden="true">Figure 16: восстановление контекста
+безопасности</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-14" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>Перезапускаем Postfix, запускаем Dovecot.</p>
+<figure id="fig:017">
+<img data-src="image/17.PNG" style="width:60.0%"
+alt="Figure 17: перезапуск postfix, запуск dovecot" />
+<figcaption aria-hidden="true">Figure 17: перезапуск postfix, запуск
+dovecot</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-15" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>Проверяем,что Postfix успешно запущен (статус работы - active), и
+добавлен в автозапуск (enabled).</p>
+<figure id="fig:018">
+<img data-src="image/18.PNG" style="width:60.0%"
+alt="Figure 18: проверка запуска postfix" />
+<figcaption aria-hidden="true">Figure 18: проверка запуска
+postfix</figcaption>
+</figure>
+</section>
+<section id="настройка-dovecot-16" class="slide level2">
+<h2>Настройка dovecot</h2>
+<p>Проверяем,что Dovecot успешно запущен (статус работы - active), и
+добавлен в автозапуск (enabled).</p>
+<figure id="fig:019">
+<img data-src="image/19.PNG" style="width:60.0%"
+alt="Figure 19: проверка запуска dovecot" />
+<figcaption aria-hidden="true">Figure 19: проверка запуска
+dovecot</figcaption>
+</figure>
+</section></section>
+<section>
+<section id="проверка-работы-dovecot" class="title-slide slide level1">
+<h1>Проверка работы Dovecot</h1>
+
+</section>
+<section id="проверка-работы-dovecot-1" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Заранее отправляем на почту 3 тестовых сообщения.</p>
+<figure id="fig:020">
+<img data-src="image/20.PNG" style="width:60.0%"
+alt="Figure 20: отправка тестовых сообщений" />
+<figcaption aria-hidden="true">Figure 20: отправка тестовых
+сообщений</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-2" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>На дополнительном терминале ВМ server запускаем мониторинг работы
+почтовой службы. На терминале server просматриваем почту через mail,
+видим 3 отправленных ранее тестовых сообщения.</p>
+<figure id="fig:021">
+<img data-src="image/21.PNG" style="width:60.0%"
+alt="Figure 21: просмотр сообщений через mail" />
+<figcaption aria-hidden="true">Figure 21: просмотр сообщений через
+mail</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-3" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Аналогично просматриваем почту через doveadm, видим те же 3 тестовых
+сообщения.</p>
+<figure id="fig:023">
+<img data-src="image/23.PNG" style="width:60.0%"
+alt="Figure 22: просмотр сообщений через doveadm" />
+<figcaption aria-hidden="true">Figure 22: просмотр сообщений через
+doveadm</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-4" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>На терминале server проверяем, что ящик INBOX присутствует.</p>
+<figure id="fig:022">
+<img data-src="image/22.PNG" style="width:60.0%"
+alt="Figure 23: просмотр mailbox" />
+<figcaption aria-hidden="true">Figure 23: просмотр mailbox</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-5" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Запускаем ВМ client, перезходим к суперпользователю. Установите
+почтовый клиент evolution.</p>
+<figure id="fig:024">
+<img data-src="image/24.PNG" style="width:60.0%"
+alt="Figure 24: установка почтового клиента evolution" />
+<figcaption aria-hidden="true">Figure 24: установка почтового клиента
+evolution</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-6" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Запускаем почтовый клиент Evolution.Проверяем доступность почтовых
+портов IMAP и SMTP.</p>
+<figure id="fig:025">
+<img data-src="image/25.PNG" style="width:60.0%"
+alt="Figure 25: проверка доступности почтовых портов IMAP и SMTP" />
+<figcaption aria-hidden="true">Figure 25: проверка доступности почтовых
+портов IMAP и SMTP</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-7" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Начинаем настройку Evolution, следуя указаниям из материалов.</p>
+<figure id="fig:026">
+<img data-src="image/26.PNG" style="width:60.0%"
+alt="Figure 26: настройка почтового клиента evolution" />
+<figcaption aria-hidden="true">Figure 26: настройка почтового клиента
+evolution</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-8" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Продолжаем настройку Evolution, следуя указаниям из материалов.</p>
+<figure id="fig:027">
+<img data-src="image/27.PNG" style="width:60.0%"
+alt="Figure 27: настройка почтового клиента evolution" />
+<figcaption aria-hidden="true">Figure 27: настройка почтового клиента
+evolution</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-9" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Завершаем настройку Evolution, следуя указаниям из материалов.</p>
+<figure id="fig:028">
+<img data-src="image/28.PNG" style="width:60.0%"
+alt="Figure 28: настройка почтового клиента evolution" />
+<figcaption aria-hidden="true">Figure 28: настройка почтового клиента
+evolution</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-10" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Из почтового клиента отправляем себе тестовое письмо.</p>
+<figure id="fig:029">
+<img data-src="image/29.PNG" style="width:60.0%"
+alt="Figure 29: отправка тестового письма client" />
+<figcaption aria-hidden="true">Figure 29: отправка тестового письма
+client</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-11" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Проверяем, что письмо доставлено: проматриваем мониторинг почтовой
+службы на server.</p>
+<figure id="fig:030">
+<img data-src="image/30.PNG" style="width:60.0%"
+alt="Figure 30: проверка через мониторинг tail: письмо отправлено и получено" />
+<figcaption aria-hidden="true">Figure 30: проверка через мониторинг
+tail: письмо отправлено и получено</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-12" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Дополительно проверяем, что письмо доставлено и появилось в
+Maildir.</p>
+<figure id="fig:040">
+<img data-src="image/40.PNG" style="width:60.0%"
+alt="Figure 31: проверка Maildir: письмо появилось" />
+<figcaption aria-hidden="true">Figure 31: проверка Maildir: письмо
+появилось</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-13" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Дополительно проверяем, что письмо доставлено, через доставлено
+doveadm.</p>
+<figure id="fig:031">
+<img data-src="image/31.PNG" style="width:60.0%"
+alt="Figure 32: проверка через doveadm: письмо появилось (под номером 4)" />
+<figcaption aria-hidden="true">Figure 32: проверка через doveadm: письмо
+появилось (под номером 4)</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-14" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Проверяем работу почтовой службы: подключаемся с помощью протокола
+Telnet к почтовому серверу по протоколу POP3 (через порт 110), вводим
+логин и пароль.</p>
+<figure id="fig:032">
+<img data-src="image/32.PNG" style="width:60.0%"
+alt="Figure 33: провекра работы почтовой службы" />
+<figcaption aria-hidden="true">Figure 33: провекра работы почтовой
+службы</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-15" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Продолжаем проверку работы почтовой службы: получаем список писем
+(list), получаем 1-е письмо из списка (retr 1), удаляем 2-е письмо из
+списка (dele 2), завершаем сеанс работы с telnet (quit).</p>
+<figure id="fig:033">
+<img data-src="image/33.PNG" style="width:45.0%"
+alt="Figure 34: провекра работы почтовой службы" />
+<figcaption aria-hidden="true">Figure 34: провекра работы почтовой
+службы</figcaption>
+</figure>
+</section>
+<section id="проверка-работы-dovecot-16" class="slide level2">
+<h2>Проверка работы Dovecot</h2>
+<p>Проверяем результаты работы почтовой службы: видим, что 2-е письмо
+успешно удалено из почты.</p>
+<figure id="fig:034">
+<img data-src="image/34.PNG" style="width:60.0%"
+alt="Figure 35: провекра результатов" />
+<figcaption aria-hidden="true">Figure 35: провекра
+результатов</figcaption>
+</figure>
+</section></section>
+<section>
+<section id="внесение-изменений-в-настройки-внутреннего-окружения-вм"
+class="title-slide slide level1">
+<h1>Внесение изменений в настройки внутреннего окружения ВМ</h1>
+
+</section>
+<section id="внесение-изменений-в-настройки-внутреннего-окружения-вм-1"
+class="slide level2">
+<h2>Внесение изменений в настройки внутреннего окружения ВМ</h2>
+<p>На ВМ server переходим в каталог для внесения изменений в настройки
+внутреннего окружения /vagrant/provision/server/. В соответствующие
+подкаталоги прмещаем конфигурационные файлы Dovecot.</p>
+<figure id="fig:035">
+<img data-src="image/35.PNG" style="width:60.0%"
+alt="Figure 36: внесение изменений в настройки внутреннего окружения" />
+<figcaption aria-hidden="true">Figure 36: внесение изменений в настройки
+внутреннего окружения</figcaption>
+</figure>
+</section>
+<section id="внесение-изменений-в-настройки-внутреннего-окружения-вм-2"
+class="slide level2">
+<h2>Внесение изменений в настройки внутреннего окружения ВМ</h2>
+<p>Вносим изменения в файл
+/vagrant/provision/<strong>server</strong>/mail.sh.</p>
+<figure id="fig:036">
+<img data-src="image/36.PNG" style="width:50.0%"
+alt="Figure 37: внесение изменений в server/mail.sh, относящихся к dovecot и postfix" />
+<figcaption aria-hidden="true">Figure 37: внесение изменений в
+server/mail.sh, относящихся к dovecot и postfix</figcaption>
+</figure>
+</section>
+<section id="внесение-изменений-в-настройки-внутреннего-окружения-вм-3"
+class="slide level2">
+<h2>Внесение изменений в настройки внутреннего окружения ВМ</h2>
+<p>Продолжаем вносить изменения в файл
+/vagrant/provision/<strong>server</strong>/mail.sh.</p>
+<figure id="fig:037">
+<img data-src="image/37.PNG" style="width:60.0%"
+alt="Figure 38: внесение изменений в server/mail.sh, относящихся к dovecot и postfix" />
+<figcaption aria-hidden="true">Figure 38: внесение изменений в
+server/mail.sh, относящихся к dovecot и postfix</figcaption>
+</figure>
+</section>
+<section id="внесение-изменений-в-настройки-внутреннего-окружения-вм-4"
+class="slide level2">
+<h2>Внесение изменений в настройки внутреннего окружения ВМ</h2>
+<p>На ВМ client вносим изменения в файл
+/vagrant/provision/<strong>client</strong>/mail.sh.</p>
+<figure id="fig:038">
+<img data-src="image/38.PNG" style="width:60.0%"
+alt="Figure 39: внесение изменений в client/mail.sh" />
+<figcaption aria-hidden="true">Figure 39: внесение изменений в
+client/mail.sh</figcaption>
+</figure>
+</section></section>
+<section>
+<section id="выводы" class="title-slide slide level1">
+<h1>Выводы</h1>
+
+</section>
+<section id="выводы-1" class="slide level2">
+<h2>Выводы</h2>
+<p>В ходе выполнения лабораторной работы № 9 мне удалось приобрести
+практические навыки по установке и простейшему конфигурированию
+POP3/IMAP-сервера.</p>
+</section></section>
+<section>
+<section id="список-литературы" class="title-slide slide level1">
+<h1>Список литературы</h1>
+
+</section>
+<section id="список-литературы-1" class="slide level2">
+<h2>Список литературы</h2>
+<ol type="1">
+<li>Dovecot Documentation. — URL: https : / / dovecot . org /
+documentation (дата обращения: 31/10/2026).</li>
+<li>Postfix Documentation. — URL:
+http://www.postfix.org/documentation.html (дата обращения:
+31/10/2026).</li>
+</ol>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
