@@ -11,7 +11,7 @@ toc-title: "Содержание"
 ## Pdf output format
 toc: true
 toc-depth: 2
-lof: true
+lof: false
 lot: false
 fontsize: 12pt
 linestretch: 1.5
@@ -30,7 +30,6 @@ monofont: Liberation Mono
 ## Pandoc-crossref LaTeX customization
 figureTitle: "Рис."
 tableTitle: "Таблица"
-lofTitle: "Список иллюстраций"
 
 ## Misc options
 indent: true
@@ -46,8 +45,7 @@ header-includes:
 
 # Задание
 
-1.
-2.
+Задание
 
 # Выполнение лабораторной работы
 
@@ -55,6 +53,14 @@ header-includes:
 
 ![](image/1.PNG){#fig:001 width=60%}
 
+# Контрольные вопросы
+
+Ответы
+
 # Выводы
 
-В ходе выполнения лабораторной работы № N мне удалось
+В ходе выполнения лабораторной работы № N мне удалось приобрести 
+
+# Список литературы 
+
+Список
