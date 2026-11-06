@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Глушенок А. А.">
+  <title>Лабораторная работа № 5. Адресация IPv4 и IPv6. Настройка DHCP</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/beige.css" id="theme">
+  
+  
+  
+  
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Лабораторная работа № 5. Адресация IPv4 и IPv6.
+Настройка DHCP</h1>
+  <p class="subtitle">Презентация</p>
+  <p class="author">Глушенок А. А.</p>
+  <p class="institute">Российский университет дружбы народов, Москва,
+Россия</p>
+  <p class="date">6 октября 2026</p>
+</section>
+
+<section>
+<section id="информация" class="title-slide slide level1">
+<h1>Информация</h1>
+
+</section>
+<section id="докладчик" class="slide level2">
+<h2>Докладчик</h2>
+<div class="columns" data-align="center">
+<div class="column" style="width:70%;">
+<ul>
+<li>Глушенок Анна Александровна</li>
+<li>Студент НПИбд-01-24</li>
+<li>Российский университет дружбы народов</li>
+<li><a href="mailto:1132246844@pfur.ru">1132246844@pfur.ru</a></li>
+</ul>
+</div><div class="column" style="width:30%;">
+
+</div>
+</div>
+</section>
+<section id="цель-работы" class="slide level2">
+<h2>Цель работы</h2>
+<p>Получение навыков настройки службы DHCP на сетевом оборудовании для
+распределения адресов IPv4 и IPv6.</p>
+</section>
+<section id="задание" class="slide level2">
+<h2>Задание</h2>
+<ol type="1">
+<li>Настроить DHCP в случае IPv4.</li>
+<li>Настроить DHCP в случае IPv6.</li>
+</ol>
+</section></section>
+<section id="выполнение-лабораторной-работы"
+class="title-slide slide level1">
+<h1>Выполнение лабораторной работы</h1>
+
+</section>
+
+<section>
+<section id="настройка-dhcp-в-случае-ipv4"
+class="title-slide slide level1">
+<h1>Настройка DHCP в случае IPv4</h1>
+
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-1" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol type="1">
+<li>Запускаем GNS3 VM и GNS3. Создаем новый проект, называем его
+lab5.</li>
+</ol>
+<figure id="fig:000">
+<img data-src="image/0.PNG" style="width:60.0%"
+alt="Figure 1: создание проекта" />
+<figcaption aria-hidden="true">Figure 1: создание проекта</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-2" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol start="2" type="1">
+<li>В рабочем пространстве размещаем и соединяем устройства в
+соответствии с первой топологией.</li>
+<li>Меняем отображаемые названия устройств.</li>
+</ol>
+<figure id="fig:001">
+<img data-src="image/1.PNG" style="width:60.0%"
+alt="Figure 2: построение топологии" />
+<figcaption aria-hidden="true">Figure 2: построение
+топологии</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-3" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol start="4" type="1">
+<li>Включаем захват трафика на соединении между коммутатором и
+маршрутизатором.</li>
+</ol>
+<figure id="fig:002">
+<img data-src="image/2.PNG" style="width:60.0%"
+alt="Figure 3: включение захвата трафика" />
+<figcaption aria-hidden="true">Figure 3: включение захвата
+трафика</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-4" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<p>Открываем консоль маршрутизатора.</p>
+<figure id="fig:003">
+<img data-src="image/3.PNG" style="width:60.0%"
+alt="Figure 4: открытие консоли маршрутизатора" />
+<figcaption aria-hidden="true">Figure 4: открытие консоли
+маршрутизатора</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-5" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<p>Меняем имя устройства, доменное имя и имя системного
+пользователя.</p>
+<figure id="fig:004">
+<img data-src="image/4.PNG" style="width:60.0%"
+alt="Figure 5: смена имени устройства и доменного имени" />
+<figcaption aria-hidden="true">Figure 5: смена имени устройства и
+доменного имени</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-6" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<p>Отключаем dhcp для eth0.</p>
+<figure id="fig:005">
+<img data-src="image/5.PNG" style="width:60.0%"
+alt="Figure 6: отключение dhcp для eth0" />
+<figcaption aria-hidden="true">Figure 6: отключение dhcp для
+eth0</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-7" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<figure id="fig:006">
+<img data-src="image/6.PNG" style="width:60.0%"
+alt="Figure 7: ввод логина и пароля" />
+<figcaption aria-hidden="true">Figure 7: ввод логина и
+пароля</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-8" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<p>Сохраняем конфигурации.</p>
+<figure id="fig:007">
+<img data-src="image/7.PNG" style="width:60.0%"
+alt="Figure 8: сохранение конфигураций" />
+<figcaption aria-hidden="true">Figure 8: сохранение
+конфигураций</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-9" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol start="5" type="1">
+<li>На маршрутизаторе под созданным пользователем настраиваем адресацию
+IPv4.</li>
+</ol>
+<figure id="fig:008">
+<img data-src="image/8.PNG" style="width:60.0%"
+alt="Figure 9: настройка адресации IPv4" />
+<figcaption aria-hidden="true">Figure 9: настройка адресации
+IPv4</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-10" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol start="6" type="1">
+<li>Добавляем конфигурацию DHCP-сервера на маршрутизаторе: создаем
+разделяемую сеть, подсеть с адресом 10.0.0.0/24, задаем диапазон
+адресов.</li>
+</ol>
+<figure id="fig:009">
+<img data-src="image/9.PNG" style="width:60.0%"
+alt="Figure 10: добавление конфигурации DHCP-сервера" />
+<figcaption aria-hidden="true">Figure 10: добавление конфигурации
+DHCP-сервера</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-11" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<p>Сохраняем конфигурации.</p>
+<figure id="fig:010">
+<img data-src="image/10.PNG" style="width:60.0%"
+alt="Figure 11: сохранение конфигураций" />
+<figcaption aria-hidden="true">Figure 11: сохранение
+конфигураций</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-12" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol start="7" type="1">
+<li>Просматриваем статистику DHCP-сервера и выданные адреса.</li>
+</ol>
+<figure id="fig:011">
+<img data-src="image/11.PNG" style="width:60.0%"
+alt="Figure 12: просмотр статистики DHCP-сервера" />
+<figcaption aria-hidden="true">Figure 12: просмотр статистики
+DHCP-сервера</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-13" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol start="8" type="1">
+<li>Настраиваем оконечное устройство PC1. Сначала открываем консоль
+PC1.</li>
+</ol>
+<figure id="fig:012">
+<img data-src="image/12.PNG" style="width:60.0%"
+alt="Figure 13: открытие консоли PC1" />
+<figcaption aria-hidden="true">Figure 13: открытие консоли
+PC1</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-14" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<p>Далее вносим изменения в конфигурации PC1.</p>
+<figure id="fig:013">
+<img data-src="image/13.PNG" style="width:60.0%"
+alt="Figure 14: настройка PC1" />
+<figcaption aria-hidden="true">Figure 14: настройка PC1</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-15" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<p>Затем сохраняем конфигурации.</p>
+<figure id="fig:014">
+<img data-src="image/14.PNG" style="width:50.0%"
+alt="Figure 15: сохранение конфигураций" />
+<figcaption aria-hidden="true">Figure 15: сохранение
+конфигураций</figcaption>
+</figure>
+<p><strong>Пояснение к полученной на экране PC1 информации:</strong>
+Видим, что PC1 успешно отправил широковещательный запрос DHCP Discover
+на поиск DHCP-сервера. Запрос содержит MAC-адрес и имя устройства. Так
+как это только начальная стадия получения адреса, сам IP-адрес еще не
+получен (все адресные поля равны 0.0.0.0).</p>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-16" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol start="9" type="1">
+<li>Проверяем конфигурацию IPv4 на узле, пингуем маршрутизатор.</li>
+</ol>
+<figure id="fig:015">
+<img data-src="image/15.PNG" style="width:60.0%"
+alt="Figure 16: проверка конфигурации IPv4, пингование" />
+<figcaption aria-hidden="true">Figure 16: проверка конфигурации IPv4,
+пингование</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-17" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol start="10" type="1">
+<li>На маршрутизаторе вновь просматриваем статистику DHCP-сервера и
+выданные адреса.</li>
+</ol>
+<figure id="fig:016">
+<img data-src="image/16.PNG" style="width:50.0%"
+alt="Figure 17: просмотр статистики DHCP-сервера" />
+<figcaption aria-hidden="true">Figure 17: просмотр статистики
+DHCP-сервера</figcaption>
+</figure>
+<p><strong>Пояснение к полученной информации:</strong> Видим, что после
+включения клиента PC1 статистика изменилась: счетчик Leases вырос с 0 до
+1, а Available уменьшился с 252 до 251, при этом в таблице аренд
+появилась активная запись для IP 10.0.0.2 с MAC-адресом клиента и сроком
+аренды на 24 часа. Это произошло потому, что виртуальный ПК успешно
+отправил DHCP-запрос, и сервер выделил ему первый свободный адрес из
+настроенного пула, зарезервировав его за устройством на заданное
+время.</p>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-18" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol start="11" type="1">
+<li>На маршрутизаторе просматриваем журнал работы DHCP-сервера: записи
+подтверждают, что служба DHCP успешно запустилась и обновила файл аренд,
+а также что сервер корректно проигнорировал запросы на интерфейсах eth1
+и eth2 из-за отсутствия на них настроенных IPv4-подсетей.</li>
+</ol>
+<figure id="fig:017">
+<img data-src="image/17.PNG" style="width:60.0%"
+alt="Figure 18: просмотр журнала работы DHCP-сервера" />
+<figcaption aria-hidden="true">Figure 18: просмотр журнала работы
+DHCP-сервера</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv4-19" class="slide level2">
+<h2>Настройка DHCP в случае IPv4</h2>
+<ol start="12" type="1">
+<li>Анализируем захваченные анализатором трафика пакеты, относящиеся к
+работе DHCP и назначению адреса устройству: захваченный трафик наглядно
+демонстрирует стандартный процесс аренды адреса по протоколу DHCP
+(Discover -&gt; Offer -&gt; Request -&gt; ACK), в результате которого
+устройству PC1 был успешно назначен IP-адрес 10.0.0.2.</li>
+</ol>
+<figure id="fig:018">
+<img data-src="image/18.PNG" style="width:60.0%"
+alt="Figure 19: просмотр пакетов DHCP" />
+<figcaption aria-hidden="true">Figure 19: просмотр пакетов
+DHCP</figcaption>
+</figure>
+</section></section>
+<section>
+<section id="настройка-dhcp-в-случае-ipv6"
+class="title-slide slide level1">
+<h1>Настройка DHCP в случае IPv6</h1>
+
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-1" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol type="1">
+<li>Дополняем сеть в соответствии со второй топологией.</li>
+<li>Меняем отображаемые названия устройств.</li>
+</ol>
+<figure id="fig:019">
+<img data-src="image/19.PNG" style="width:40.0%"
+alt="Figure 20: построение топологии" />
+<figcaption aria-hidden="true">Figure 20: построение
+топологии</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-2" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="3" type="1">
+<li>Сначала включаем захват трафика на соединениях между маршрутизатором
+и коммутором sw-03.</li>
+</ol>
+<figure id="fig:020">
+<img data-src="image/20.PNG" style="width:40.0%"
+alt="Figure 21: включение захвата трафика между gw-01 и sw-03" />
+<figcaption aria-hidden="true">Figure 21: включение захвата трафика
+между gw-01 и sw-03</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-3" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Затем включаем захват трафика на соединениях между маршрутизатором и
+коммутором sw-02.</p>
+<figure id="fig:021">
+<img data-src="image/21.PNG" style="width:40.0%"
+alt="Figure 22: включение захвата трафика между gw-01 и sw-02" />
+<figcaption aria-hidden="true">Figure 22: включение захвата трафика
+между gw-01 и sw-02</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-4" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="4" type="1">
+<li>Настраиваем адресацию IPv6 на маршрутизаторе. Сначала открываем
+консоль маршрутизатора.</li>
+</ol>
+<figure id="fig:022">
+<img data-src="image/22.PNG" style="width:40.0%"
+alt="Figure 23: открытие консоли маршрутизатора" />
+<figcaption aria-hidden="true">Figure 23: открытие консоли
+маршрутизатора</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-5" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Далее настраиваем адресацию IPv6.</p>
+<figure id="fig:023">
+<img data-src="image/23.PNG" style="width:60.0%"
+alt="Figure 24: настройка адресации IPv6" />
+<figcaption aria-hidden="true">Figure 24: настройка адресации
+IPv6</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-6" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Затем просматриваем текущее состояние интерфейсов и сохраняем
+изменения.</p>
+<figure id="fig:024">
+<img data-src="image/24.PNG" style="width:60.0%"
+alt="Figure 25: просмотр текущего состояния интерфейсов" />
+<figcaption aria-hidden="true">Figure 25: просмотр текущего состояния
+интерфейсов</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-7" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="5" type="1">
+<li>На маршрутизаторе настраиваем DHCPv6 без отслеживания состояния:
+сначала настраиваем объявление о маршрутизаторах на интерфейсе
+eth1.</li>
+</ol>
+<figure id="fig:025">
+<img data-src="image/25.PNG" style="width:60.0%"
+alt="Figure 26: настройка объявления о маршрутизаторах на интерфейсе eth1" />
+<figcaption aria-hidden="true">Figure 26: настройка объявления о
+маршрутизаторах на интерфейсе eth1</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-8" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Далее добавляем конфигурации DHCP-сервера.</p>
+<figure id="fig:026">
+<img data-src="image/26.PNG" style="width:60.0%"
+alt="Figure 27: добавление конфигурации DHCP-сервера" />
+<figcaption aria-hidden="true">Figure 27: добавление конфигурации
+DHCP-сервера</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-9" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Далее проверяем внесенные изменения и сохраняем их.</p>
+<figure id="fig:027">
+<img data-src="image/27.PNG" style="width:40.0%"
+alt="Figure 28: проверка внесенных изменений" />
+<figcaption aria-hidden="true">Figure 28: проверка внесенных
+изменений</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-10" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Затем просматриваем итоговую конфигурацию.</p>
+<figure id="fig:028">
+<img data-src="image/28.PNG" style="width:40.0%"
+alt="Figure 29: просмотр итоговой конфигурации" />
+<figcaption aria-hidden="true">Figure 29: просмотр итоговой
+конфигурации</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-11" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="6" type="1">
+<li>На узлах AlmaLinux и AlpineLinuxVirt PC2 проверяем настройки сети.
+Сначала открываем консоль для AlmaLinux.</li>
+</ol>
+<figure id="fig:029">
+<img data-src="image/29.PNG" style="width:40.0%"
+alt="Figure 30: открытие консоли для AlmaLinux" />
+<figcaption aria-hidden="true">Figure 30: открытие консоли для
+AlmaLinux</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-12" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Далее открываем консоль для AlpineLinuxVirt.</p>
+<figure id="fig:034">
+<img data-src="image/34.PNG" style="width:40.0%"
+alt="Figure 31: открытие консоли для AlpineLinuxVirt" />
+<figcaption aria-hidden="true">Figure 31: открытие консоли для
+AlpineLinuxVirt</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-13" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Далее проверяем настройки сети для AlmaLinux.</p>
+<figure id="fig:030">
+<img data-src="image/30.PNG" style="width:60.0%"
+alt="Figure 32: проверка настроек сети для AlmaLinux" />
+<figcaption aria-hidden="true">Figure 32: проверка настроек сети для
+AlmaLinux</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-14" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Продолжаем проверку настроек.</p>
+<figure id="fig:031">
+<img data-src="image/31.PNG" style="width:60.0%"
+alt="Figure 33: проверка настроек сети для AlmaLinux" />
+<figcaption aria-hidden="true">Figure 33: проверка настроек сети для
+AlmaLinux</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-15" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Затем проверяем настройки сети для AlpineLinuxVirt.</p>
+<figure id="fig:035">
+<img data-src="image/35.PNG" style="width:60.0%"
+alt="Figure 34: проверка настроек сети для AlpineLinuxVirt" />
+<figcaption aria-hidden="true">Figure 34: проверка настроек сети для
+AlpineLinuxVirt</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-16" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="7" type="1">
+<li>На узлах AlmaLinux и AlpineLinuxVirt PC2 пингуем маршрутизатор.
+Сначала для AlmaLinux.</li>
+</ol>
+<figure id="fig:032">
+<img data-src="image/32.PNG" style="width:60.0%"
+alt="Figure 35: пингование маршрутизатора для AlmaLinux" />
+<figcaption aria-hidden="true">Figure 35: пингование маршрутизатора для
+AlmaLinux</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-17" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Затем для AlpineLinuxVirt.</p>
+<figure id="fig:036">
+<img data-src="image/36.PNG" style="width:60.0%"
+alt="Figure 36: пингование маршрутизатора для AlpineLinuxVirt" />
+<figcaption aria-hidden="true">Figure 36: пингование маршрутизатора для
+AlpineLinuxVirt</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-18" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="8" type="1">
+<li>На узлах AlmaLinux и AlpineLinuxVirt PC2 проверяем настройки DNS.
+Сначала для AlmaLinux.</li>
+</ol>
+<figure id="fig:033">
+<img data-src="image/33.PNG" style="width:60.0%"
+alt="Figure 37: проверка настроек DNS для AlmaLinux" />
+<figcaption aria-hidden="true">Figure 37: проверка настроек DNS для
+AlmaLinux</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-19" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Затем для AlpineLinuxVirt.</p>
+<figure id="fig:037">
+<img data-src="image/37.PNG" style="width:60.0%"
+alt="Figure 38: проверка настроек DNS для AlpineLinuxVirt" />
+<figcaption aria-hidden="true">Figure 38: проверка настроек DNS для
+AlpineLinuxVirt</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-20" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="9" type="1">
+<li>На маршрутизаторе смотрим, выдается ли статистика DHCP-сервера и
+выданные адреса. Видим, что команда выполнилась и выдала статистику
+(сервис DHCPv6 уже поднят для stateless-сети), но список аренд пустой,
+так как, <strong>для первой сети:</strong> настроен режим без выдачи
+адресов (Stateless), а <strong>для второй сети:</strong> сервер выдачи
+адресов (Stateful) еще не настроен, и клиент PC3 пока не отправлял
+запрос.</li>
+</ol>
+<figure id="fig:038">
+<img data-src="image/38.PNG" style="width:60.0%"
+alt="Figure 39: просмотр статистики DHCP-сервера" />
+<figcaption aria-hidden="true">Figure 39: просмотр статистики
+DHCP-сервера</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-21" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="11" type="1">
+<li>На маршрутизаторе настраиваем DHCPv6 с отслеживанием состояния:
+настраиваем объявления о маршрутизаторах, добавляем конфигурацию
+DHCP-сервера на маршрутизаторе.</li>
+</ol>
+<figure id="fig:039">
+<img data-src="image/39.PNG" style="width:60.0%"
+alt="Figure 40: настройка DHCPv6 с отслеживанием состояния" />
+<figcaption aria-hidden="true">Figure 40: настройка DHCPv6 с
+отслеживанием состояния</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-22" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Проверяем внесенные изменения и сохраняем их.</p>
+<figure id="fig:040">
+<img data-src="image/40.PNG" style="width:40.0%"
+alt="Figure 41: проверка внесенных изменений" />
+<figcaption aria-hidden="true">Figure 41: проверка внесенных
+изменений</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-23" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="12" type="1">
+<li>На маршрутизаторе смотрим статистику DHCP-сервера и выданные адреса:
+видим, что в таблице появились две активные аренды (2001::193 и
+2001::199).</li>
+</ol>
+<figure id="fig:041">
+<img data-src="image/41.PNG" style="width:60.0%"
+alt="Figure 42: просмотр статистики DHCP-сервера" />
+<figcaption aria-hidden="true">Figure 42: просмотр статистики
+DHCP-сервера</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-24" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="13" type="1">
+<li>Подключаемся к узлу PC3 и проверяем настройки сети.</li>
+<li>На узлах AlmaLinux и AlpineLinuxVirt PC3 проверяем настройки
+DNS.</li>
+</ol>
+<p>Сначала для AlmaLinux.</p>
+<figure id="fig:042">
+<img data-src="image/42.PNG" style="width:60.0%"
+alt="Figure 43: проверка настроек сети AlmaLinux" />
+<figcaption aria-hidden="true">Figure 43: проверка настроек сети
+AlmaLinux</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-25" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Затем для AlpineLinuxVirt.</p>
+<figure id="fig:043">
+<img data-src="image/43.PNG" style="width:60.0%"
+alt="Figure 44: проверка настроек сети для AlpineLinuxVirt" />
+<figcaption aria-hidden="true">Figure 44: проверка настроек сети для
+AlpineLinuxVirt</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-26" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="15" type="1">
+<li>На узле AlpineLinuxVirt PC3 получаем адрес по DHCPv6.</li>
+</ol>
+<figure id="fig:044">
+<img data-src="image/44.PNG" style="width:60.0%"
+alt="Figure 45: получение адреса по DHCPv6" />
+<figcaption aria-hidden="true">Figure 45: получение адреса по
+DHCPv6</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-27" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="16" type="1">
+<li>Вновь на узлах AlmaLinux и AlpineLinuxVirt PC3 проверяем настройки
+сети.</li>
+</ol>
+<figure id="fig:045">
+<img data-src="image/45.PNG" style="width:60.0%"
+alt="Figure 46: проверка настроек сети" />
+<figcaption aria-hidden="true">Figure 46: проверка настроек
+сети</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-28" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Далее пингуем маршрутизатор.</p>
+<figure id="fig:046">
+<img data-src="image/46.PNG" style="width:60.0%"
+alt="Figure 47: пингование маршрутизатора" />
+<figcaption aria-hidden="true">Figure 47: пингование
+маршрутизатора</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-29" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<p>Затем проверяем настройки DNS.</p>
+<figure id="fig:047">
+<img data-src="image/47.PNG" style="width:60.0%"
+alt="Figure 48: проверка настроек DNS" />
+<figcaption aria-hidden="true">Figure 48: проверка настроек
+DNS</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-30" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="17" type="1">
+<li>На маршрутизаторе смотрим статистику DHCP-сервера и выданные адреса:
+видим, что в таблице появились три активные аренды (2001::190, 2001::193
+и 2001::199).</li>
+</ol>
+<figure id="fig:048">
+<img data-src="image/48.PNG" style="width:60.0%"
+alt="Figure 49: просмотр статистики DHCP-сервера" />
+<figcaption aria-hidden="true">Figure 49: просмотр статистики
+DHCP-сервера</figcaption>
+</figure>
+</section>
+<section id="настройка-dhcp-в-случае-ipv6-31" class="slide level2">
+<h2>Настройка DHCP в случае IPv6</h2>
+<ol start="18" type="1">
+<li>Анализируем захваченные анализатором трафика пакеты, относящиеся к
+работе DHCPv6 и назначению адреса устройству. Видим последовательность
+Solicit → Advertise → Request → Reply (и Information-request/Reply),
+подтверждающую работу DHCPv6 с отслеживанием состояния.</li>
+</ol>
+<figure id="fig:049">
+<img data-src="image/49.PNG" style="width:60.0%"
+alt="Figure 50: просмотр пакетов DHCPv6" />
+<figcaption aria-hidden="true">Figure 50: просмотр пакетов
+DHCPv6</figcaption>
+</figure>
+</section></section>
+<section>
+<section id="выводы" class="title-slide slide level1">
+<h1>Выводы</h1>
+
+</section>
+<section id="выводы-1" class="slide level2">
+<h2>Выводы</h2>
+<p>В ходе выполнения лабораторной работы № 5 мне удалось получить навыки
+настройки службы DHCP на сетевом оборудовании для распределения адресов
+IPv4 и IPv6.</p>
+</section></section>
+<section>
+<section id="список-литературы" class="title-slide slide level1">
+<h1>Список литературы</h1>
+
+</section>
+<section id="список-литературы-1" class="slide level2">
+<h2>Список литературы</h2>
+<ol type="1">
+<li><p>IETF. RFC 2131: Dynamic Host Configuration Protocol [Электронный
+ресурс]. — URL: https://datatracker.ietf.org/doc/html/rfc2131 (дата
+обращения: 07.11.2026).</p></li>
+<li><p>IETF. RFC 3315: Dynamic Host Configuration Protocol for IPv6
+(DHCPv6) [Электронный ресурс]. — URL:
+https://datatracker.ietf.org/doc/html/rfc3315 (дата обращения:
+07.11.2026).</p></li>
+<li><p>IETF. RFC 8415: Dynamic Host Configuration Protocol for IPv6
+(DHCPv6bis) [Электронный ресурс]. — URL:
+https://datatracker.ietf.org/doc/html/rfc8415 (дата обращения:
+07.11.2026).</p></li>
+<li><p>IETF. RFC 4862: IPv6 Stateless Address Autoconfiguration
+[Электронный ресурс]. — URL:
+https://datatracker.ietf.org/doc/html/rfc4862 (дата обращения:
+07.11.2026).</p></li>
+<li><p>IETF. RFC 4861: Neighbor Discovery for IP version 6 (IPv6)
+[Электронный ресурс]. — URL:
+https://datatracker.ietf.org/doc/html/rfc4861 (дата обращения:
+07.11.2026).</p></li>
+<li><p>VyOS Documentation [Электронный ресурс]. — URL:
+https://docs.vyos.io/ (дата обращения: 07.11.2026).</p></li>
+</ol>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
