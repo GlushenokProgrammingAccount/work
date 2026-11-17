@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Преподаватель: Королькова Анна Владиславовна">
+  <meta name="author" content="Занимаемая должность: доцент кафедры теории вероятностей и кибербезопасности РУДН">
+  <meta name="author" content="Учёная степень: кандидат физико-математических наук (по специальности 05.13.18 «Математическое моделирование, численные методы и комплексы программ», присвоена 15 октября 2010 г.)">
+  <meta name="author" content="Учёное звание: доцент по специальности 05.13.18 «Математическое моделирование, численные методы и комплексы программ» (присвоено в 2015 г.)">
+  <title>Обеспечение информационной безопасности в IP-сетях</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/beige.css" id="theme">
+  
+  
+  
+  
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Обеспечение информационной безопасности в
+IP-сетях</h1>
+  <p class="subtitle">Глушенок Анна Александровна</p>
+  <p class="author"><strong>Преподаватель:</strong> Королькова Анна
+Владиславовна</p>
+  <p class="author"><strong>Занимаемая должность:</strong> доцент
+кафедры теории вероятностей и кибербезопасности РУДН</p>
+  <p class="author"><strong>Учёная степень:</strong> кандидат
+физико-математических наук (по специальности 05.13.18 «Математическое
+моделирование, численные методы и комплексы программ», присвоена 15
+октября 2010 г.)</p>
+  <p class="author"><strong>Учёное звание:</strong> доцент по
+специальности 05.13.18 «Математическое моделирование, численные методы и
+комплексы программ» (присвоено в 2015 г.)</p>
+  <p class="institute">Федеральное государственное автономное
+образовательное учреждение высшего образования Российский университет
+дружбы народов имени Патриса Лумумбы</p>
+</section>
+
+<section>
+<section id="титульный-лист" class="title-slide slide level1">
+<h1>Титульный лист</h1>
+
+</section>
+<section id="обеспечение-информационной-безопасности-в-ip-сетях"
+class="slide level2">
+<h2>Обеспечение информационной безопасности в IP-сетях</h2>
+<div class="columns" data-align="center">
+<div class="column" style="width:55%;">
+<p><strong>Студент:</strong><br />
+Глушенок Анна Александровна<br />
+Группа НПИбд-01-24</p>
+<p><strong>Преподаватель:</strong><br />
+Королькова Анна Владиславовна</p>
+<p><strong>Должность:</strong> доцент кафедры теории вероятностей и
+кибербезопасности РУДН</p>
+<p><strong>Учёная степень:</strong> кандидат физико-математических наук
+(по специальности 05.13.18 «Математическое моделирование, численные
+методы и комплексы программ», присвоена 15 октября 2010 г.)</p>
+<p><strong>Учёное звание:</strong> доцент по специальности 05.13.18
+«Математическое моделирование, численные методы и комплексы программ»
+(присвоено в 2015 г.)</p>
+</div><div class="column" style="width:45%;">
+<p><strong>Федеральное государственное автономное образовательное
+учреждение высшего образования</strong><br />
+<strong>Российский университет дружбы народов имени Патриса
+Лумумбы</strong></p>
+<p><strong>Москва</strong><br />
+2026</p>
+</div>
+</div>
+</section>
+<section id="докладчик" class="slide level2">
+<h2>Докладчик</h2>
+<div class="columns" data-align="center">
+<div class="column" style="width:70%;">
+<ul>
+<li>Глушенок Анна Александровна</li>
+<li>Студент НПИбд-01-24</li>
+<li>Российский университет дружбы народов</li>
+<li><a href="mailto:1132246844@pfur.ru">1132246844@pfur.ru</a></li>
+</ul>
+</div><div class="column" style="width:30%;">
+
+</div>
+</div>
+</section></section>
+<section>
+<section id="введение" class="title-slide slide level1">
+<h1>Введение</h1>
+
+</section>
+<section id="актуальность" class="slide level2">
+<h2>Актуальность</h2>
+<ul>
+<li>IP-сети — основа цифровой инфраструктуры</li>
+<li>Рост зависимости организаций от сетевых сервисов</li>
+<li>Увеличение числа подключённых устройств</li>
+<li>Многочисленные угрозы используют уязвимости протоколов и
+оборудования</li>
+</ul>
+</section>
+<section id="цель-и-задачи" class="slide level2">
+<h2>Цель и задачи</h2>
+<p><strong>Цель:</strong> изучить угрозы информационной безопасности
+IP-сетей и разработать комплекс мер защиты.</p>
+<p><strong>Задачи:</strong> - классифицировать основные угрозы; -
+проанализировать средства защиты; - обосновать выбор мер; - сформировать
+комплексный подход.</p>
+</section>
+<section id="объект-и-предмет" class="slide level2">
+<h2>Объект и предмет</h2>
+<p><strong>Объект:</strong> процессы передачи, обработки и защиты
+информации в IP-сетях.</p>
+<p><strong>Предмет:</strong> угрозы информационной безопасности IP-сетей
+и методы их предупреждения, обнаружения и нейтрализации.</p>
+</section></section>
+<section>
+<section id="основные-угрозы" class="title-slide slide level1">
+<h1>Основные угрозы</h1>
+
+</section>
+<section id="классификация-угроз" class="slide level2">
+<h2>Классификация угроз</h2>
+<table>
+<thead>
+<tr>
+<th>Вид угрозы</th>
+<th>Примеры</th>
+<th>Последствия</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Доступности</td>
+<td>DoS, DDoS</td>
+<td>Нарушение работы сервисов</td>
+</tr>
+<tr>
+<td>Конфиденциальности</td>
+<td>Перехват трафика</td>
+<td>Утечка данных</td>
+</tr>
+<tr>
+<td>Несанкц. доступ</td>
+<td>Подбор паролей</td>
+<td>Доступ к ресурсам</td>
+</tr>
+<tr>
+<td>Целостности</td>
+<td>Man-in-the-Middle</td>
+<td>Подмена информации</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="причины-уязвимостей" class="slide level2">
+<h2>Причины уязвимостей</h2>
+<ul>
+<li>несвоевременные обновления;</li>
+<li>устаревшие протоколы;</li>
+<li>слабые пароли;</li>
+<li>открытые порты;</li>
+<li>ошибки в правилах межсетевого экрана;</li>
+<li>отсутствие сегментации.</li>
+</ul>
+</section></section>
+<section>
+<section id="средства-защиты" class="title-slide slide level1">
+<h1>Средства защиты</h1>
+
+</section>
+<section id="межсетевые-экраны" class="slide level2">
+<h2>Межсетевые экраны</h2>
+<ul>
+<li>контроль входящих и исходящих соединений;</li>
+<li>фильтрация по правилам;</li>
+<li>разрешать только необходимые соединения;</li>
+<li>регулярно пересматривать правила.</li>
+</ul>
+</section>
+<section id="idsips" class="slide level2">
+<h2>IDS/IPS</h2>
+<ul>
+<li>выявление подозрительной активности;</li>
+<li>сигнатурный анализ — против известных атак;</li>
+<li>не всегда распознаёт новые угрозы.</li>
+</ul>
+</section>
+<section id="криптографическая-защита" class="slide level2">
+<h2>Криптографическая защита</h2>
+<ul>
+<li>TLS — защита соединений между приложениями;</li>
+<li>IPsec — защита IP-трафика на сетевом уровне;</li>
+<li>актуальные версии протоколов;</li>
+<li>контроль сертификатов и ключей.</li>
+</ul>
+</section>
+<section id="аутентификация-и-контроль-доступа" class="slide level2">
+<h2>Аутентификация и контроль доступа</h2>
+<ul>
+<li>аутентификация — кто пытается получить доступ;</li>
+<li>авторизация — какие действия разрешены;</li>
+<li>принцип минимальных привилегий.</li>
+</ul>
+</section>
+<section id="сегментация-сети" class="slide level2">
+<h2>Сегментация сети</h2>
+<ul>
+<li>разделение инфраструктуры на зоны;</li>
+<li>VLAN, маршрутизаторы, списки контроля доступа;</li>
+<li>снижение горизонтального перемещения злоумышленника.</li>
+</ul>
+</section></section>
+<section>
+<section id="комплексный-подход" class="title-slide slide level1">
+<h1>Комплексный подход</h1>
+
+</section>
+<section id="уровни-защиты" class="slide level2">
+<h2>Уровни защиты</h2>
+<ol type="1">
+<li><strong>Периметр</strong> — межсетевой экран, DMZ, фильтрация.</li>
+<li><strong>Сегментация</strong> — разделение внутренней сети.</li>
+<li><strong>Узлы и каналы</strong> — обновления, антивирус,
+TLS/IPsec.</li>
+<li><strong>Мониторинг и реагирование</strong> — IDS/IPS, журналы, план
+инцидентов.</li>
+</ol>
+</section>
+<section id="организационные-меры" class="slide level2">
+<h2>Организационные меры</h2>
+<ul>
+<li>политика информационной безопасности;</li>
+<li>порядок выдачи и отзыва прав;</li>
+<li>многофакторная аутентификация;</li>
+<li>регламент обновлений и резервного копирования;</li>
+<li>план реагирования на инциденты.</li>
+</ul>
+</section>
+<section id="оценка-эффективности" class="slide level2">
+<h2>Оценка эффективности</h2>
+<ul>
+<li>анализ конфигураций;</li>
+<li>сканирование уязвимостей;</li>
+<li>проверка сегментации;</li>
+<li>тестирование восстановления из резервных копий;</li>
+<li>учебные сценарии реагирования.</li>
+</ul>
+</section></section>
+<section>
+<section id="заключение" class="title-slide slide level1">
+<h1>Заключение</h1>
+
+</section>
+<section id="выводы" class="slide level2">
+<h2>Выводы</h2>
+<ul>
+<li>основные риски связаны с нарушением конфиденциальности, целостности
+и доступности;</li>
+<li>отдельные средства защиты недостаточны;</li>
+<li>согласованный комплекс технических и организационных мер повышает
+устойчивость IP-сети;</li>
+<li>информационная безопасность — непрерывный процесс.</li>
+</ul>
+</section></section>
+<section>
+<section id="список-литературы" class="title-slide slide level1">
+<h1>Список литературы</h1>
+
+</section>
+<section id="список-литературы-1" class="slide level2">
+<h2>Список литературы</h2>
+<ol type="1">
+<li>Scarfone, K. Guidelines on Firewalls and Firewall Policy. — NIST SP
+800-41 Rev. 1, 2009.</li>
+<li>Scarfone, K., Mell, P. Guide to Intrusion Detection and Prevention
+Systems (IDPS). — NIST SP 800-94, 2007.</li>
+<li>Rescorla, E. The Transport Layer Security (TLS) Protocol Version
+1.3. — RFC 8446, 2018.</li>
+<li>Kent, S., Seo, K. Security Architecture for the Internet Protocol. —
+RFC 4301, 2005.</li>
+<li>CISA, FBI, NSA. Enhanced Visibility and Hardening Guidance for
+Communications Infrastructure. — 2024.</li>
+<li>CISA. Technical Approaches to Uncovering and Remediating Malicious
+Activity. — AA20-245A, 2020.</li>
+</ol>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
