@@ -1,79 +1,80 @@
 ---
-## Front matter
 lang: ru-RU
-title: "Обеспечение информационной безопасности в IP-сетях"
-subtitle: "Глушенок Анна Александровна"
-institute:
-  - "Федеральное государственное автономное образовательное учреждение высшего образования Российский университет дружбы народов имени Патриса Лумумбы"
-author:
-  - "**Преподаватель:** Королькова Анна Владиславовна"
-  - "**Занимаемая должность:** доцент кафедры теории вероятностей и кибербезопасности РУДН"
-  - "**Учёная степень:** кандидат физико-математических наук (по специальности 05.13.18 «Математическое моделирование, численные методы и комплексы программ», присвоена 15 октября 2010 г.)"
-  - "**Учёное звание:** доцент по специальности 05.13.18 «Математическое моделирование, численные методы и комплексы программ» (присвоено в 2015 г.)"
 
-## Formatting pdf
+title: "Обеспечение информационной безопасности в IP-сетях"
+
+author: "Глушенок Анна Александровна"
+
+institute: |
+  Федеральное государственное автономное образовательное учреждение высшего образования\
+  Российский университет дружбы народов имени Патриса Лумумбы
+
+date: ""
+
 toc: false
 slide_level: 2
 aspectratio: 169
 section-titles: true
 theme: metropolis
+
 header-includes:
- - \metroset{progressbar=frametitle,sectionpage=progressbar,numbering=fraction}
- - \usepackage{graphicx}
- - \usepackage{caption}
- - \captionsetup{labelformat=empty, labelsep=none}
+  - \metroset{progressbar=frametitle,sectionpage=progressbar,numbering=fraction}
+  - \usepackage{graphicx}
+  - \usepackage{caption}
+  - \captionsetup{labelformat=empty, labelsep=none}
+  - \definecolor{titleorange}{RGB}{235,129,27}
+  - |
+    \newcommand{\teacherdetails}{%
+      \begin{minipage}[t]{0.92\paperwidth}
+        \raggedright
+        \fontsize{8}{9.5}\selectfont
+        \textbf{Преподаватель:} Королькова Анна Владиславовна\par
+        \vspace{0.06cm}
+        \textbf{Занимаемая должность:} доцент кафедры теории вероятностей и кибербезопасности РУДН\par
+        \vspace{0.06cm}
+        \textbf{Ученая степень:} кандидат физико-математических наук (по специальности 05.13.18 «Математическое моделирование, численные методы и комплексы программ», присвоена 15 октября 2010 г.)\par
+        \vspace{0.06cm}
+        \textbf{Ученое звание:} доцент по специальности 05.13.18 «Математическое моделирование, численные методы и комплексы программ» (присвоено в 2015 г.)\par
+      \end{minipage}%
+    }
+  - |
+    \setbeamertemplate{title page}{%
+      \begin{minipage}{0.92\paperwidth}
+        \centering
+        \vspace*{0.1cm}
+        {\fontsize{7.5}{9}\selectfont\insertinstitute\par}
+        \vspace{0.9cm}
+        \resizebox{\linewidth}{!}{\textbf{\inserttitle}}\par
+        \vspace{0.3cm}
+        {\color{titleorange}\rule{\linewidth}{0.6pt}\par}
+        \vspace{0.35cm}
+        \begin{minipage}{0.92\paperwidth}
+          \raggedright
+          {\fontsize{10}{12}\selectfont\textbf{Студент:} \insertauthor\par}
+        \end{minipage}
 
-## Fonts
-mainfont: Liberation Serif
-sansfont: PT Sans
-monofont: Liberation Mono
+        \par\vspace{1.2cm}\par
+
+        \begin{minipage}{0.92\paperwidth}
+          \raggedright
+          \teacherdetails
+        \end{minipage}
+      \end{minipage}%
+    }
+
+mainfont: "Liberation Serif"
+sansfont: "PT Sans"
+monofont: "Liberation Mono"
 ---
-
-# Титульный лист
-
-## Обеспечение информационной безопасности в IP-сетях
-
-:::::::::::::: {.columns align=center}
-::: {.column width="55%"}
-
-**Студент:**  
-Глушенок Анна Александровна  
-Группа НПИбд-01-24
-
-\vspace{0.5cm}
-
-**Преподаватель:**  
-Королькова Анна Владиславовна
-
-**Должность:** доцент кафедры теории вероятностей и кибербезопасности РУДН
-
-**Учёная степень:** кандидат физико-математических наук (по специальности 05.13.18 «Математическое моделирование, численные методы и комплексы программ», присвоена 15 октября 2010 г.)
-
-**Учёное звание:** доцент по специальности 05.13.18 «Математическое моделирование, численные методы и комплексы программ» (присвоено в 2015 г.)
-
-:::
-::: {.column width="45%"}
-
-**Федеральное государственное автономное образовательное учреждение высшего образования**  
-**Российский университет дружбы народов имени Патриса Лумумбы**
-
-\vspace{0.5cm}
-
-**Москва**  
-2026
-
-:::
-::::::::::::::
 
 ## Докладчик
 
 :::::::::::::: {.columns align=center}
 ::: {.column width="70%"}
 
-  * Глушенок Анна Александровна
-  * Студент НПИбд-01-24
-  * Российский университет дружбы народов
-  * [1132246844@pfur.ru](mailto:1132246844@pfur.ru)
+* Глушенок Анна Александровна
+* Учебная группа: НПИбд-01-24
+* Студенческий билет: 1132246844
 
 :::
 ::: {.column width="30%"}
