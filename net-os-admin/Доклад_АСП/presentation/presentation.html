@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Глушенок Анна Александровна">
+  <title>Использование Honeypot для защиты от Brute Force атак</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^5/dist/theme/beige.css" id="theme">
+  
+  
+  
+  
+  
+  
+  
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">Использование Honeypot для защиты от Brute Force
+атак</h1>
+  <p class="author">Глушенок Анна Александровна</p>
+  <p class="institute"><p>Федеральное государственное автономное
+образовательное учреждение высшего образования<br />
+Российский университет дружбы народов имени Патриса Лумумбы</p></p>
+</section>
+
+<section id="докладчик" class="slide level2">
+<h2>Докладчик</h2>
+<div class="columns" data-align="center">
+<div class="column" style="width:70%;">
+<ul>
+<li>Глушенок Анна Александровна</li>
+<li>Учебная группа: НПИбд-01-24</li>
+<li>Студенческий билет: 1132246844</li>
+</ul>
+</div><div class="column" style="width:30%;">
+
+</div>
+</div>
+</section>
+<section>
+<section id="научный-аппарат-исследования"
+class="title-slide slide level1">
+<h1>НАУЧНЫЙ АППАРАТ ИССЛЕДОВАНИЯ</h1>
+
+</section>
+<section id="научный-аппарат-исследования-1" class="slide level2">
+<h2>НАУЧНЫЙ АППАРАТ ИССЛЕДОВАНИЯ</h2>
+<p><strong>Актуальность:</strong> - Рост числа сетевых сервисов,
+доступных из Интернета. - Увеличение автоматизированных попыток подбора
+учетных данных. - Необходимость своевременного обнаружения Brute Force
+атак.</p>
+<p><strong>Проблема:</strong> попытки подбора паролей могут оставаться
+незамеченными традиционными средствами контроля доступа.</p>
+</section>
+<section id="научный-аппарат-исследования-2" class="slide level2">
+<h2>НАУЧНЫЙ АППАРАТ ИССЛЕДОВАНИЯ</h2>
+<p><strong>Объект:</strong> процессы передачи, обработки и защиты
+информации в IP-сетях.</p>
+<p><strong>Предмет:</strong> Brute Force атаки на сетевые сервисы и
+применение Honeypot для их обнаружения и анализа.</p>
+<p><strong>Научная новизна:</strong> систематизация способов подбора
+учетных данных и обобщение подхода к применению Honeypot.</p>
+<p><strong>Практическая значимость:</strong> возможность использовать
+рекомендации при проектировании и администрировании корпоративных
+IP-сетей.</p>
+</section></section>
+<section>
+<section id="методологический-аппарат-исследования"
+class="title-slide slide level1">
+<h1>МЕТОДОЛОГИЧЕСКИЙ АППАРАТ ИССЛЕДОВАНИЯ</h1>
+
+</section>
+<section id="методологический-аппарат-исследования-1"
+class="slide level2">
+<h2>МЕТОДОЛОГИЧЕСКИЙ АППАРАТ ИССЛЕДОВАНИЯ</h2>
+<p><strong>Цель:</strong> изучить Brute Force атаки, проанализировать
+принцип работы Honeypot и разработать подход к его применению.</p>
+<p><strong>Гипотеза:</strong> Honeypot повышает возможности обнаружения
+атак при использовании в составе комплекса мер защиты.</p>
+<p><strong>Задачи:</strong> - рассмотреть механизм и разновидности Brute
+Force атак; - изучить назначение и классификацию Honeypot; -
+проанализировать обнаружение атак с помощью ловушек; - сформировать
+комплексный подход и критерии его оценки.</p>
+</section>
+<section id="методологический-аппарат-исследования-2"
+class="slide level2">
+<h2>МЕТОДОЛОГИЧЕСКИЙ АППАРАТ ИССЛЕДОВАНИЯ</h2>
+<p><strong>Методы:</strong> анализ литературы, сравнение средств
+обнаружения, классификация угроз, системный подход и моделирование
+корпоративной IP-сети.</p>
+<p><strong>Основные понятия:</strong> - <strong>Brute Force</strong> —
+многократная проверка вариантов учетных данных. -
+<strong>Honeypot</strong> — специально созданный ресурс для привлечения
+злоумышленников и регистрации их действий. - <strong>Информационная
+безопасность</strong> — защищенность информации и инфраструктуры от
+угроз.</p>
+</section></section>
+<section>
+<section id="основные-угрозы-связанные-с-brute-force-атаками"
+class="title-slide slide level1">
+<h1>1. ОСНОВНЫЕ УГРОЗЫ, СВЯЗАННЫЕ С BRUTE FORCE АТАКАМИ</h1>
+
+</section>
+<section id="механизм-и-разновидности-атак" class="slide level2">
+<h2>Механизм и разновидности атак</h2>
+<ul>
+<li>Автоматизированная проверка большого количества паролей.</li>
+<li>Цели: SSH, FTP, RDP, веб-панели и другие службы удаленного
+доступа.</li>
+<li>Основные разновидности:
+<ul>
+<li>Password Guessing;</li>
+<li>Password Spraying;</li>
+<li>Credential Stuffing;</li>
+<li>Password Cracking.</li>
+</ul></li>
+</ul>
+<figure>
+<img data-src="image/1.PNG" style="width:75.0%"
+alt="Основные разновидности Brute Force атак" />
+<figcaption aria-hidden="true">Основные разновидности Brute Force
+атак</figcaption>
+</figure>
+</section>
+<section id="причины-уязвимости-и-последствия-атак"
+class="slide level2">
+<h2>Причины уязвимости и последствия атак</h2>
+<p><strong>Причины:</strong> - короткие и распространенные пароли; -
+повторное использование учетных данных; - отсутствие MFA; - отсутствие
+ограничения числа попыток входа.</p>
+<p><strong>Последствия:</strong> - захват учетной записи; - утечка
+информации; - изменение настроек сервиса; - дальнейшее проникновение во
+внутреннюю сеть.</p>
+</section>
+<section id="обнаружение-попыток-подбора-паролей" class="slide level2">
+<h2>Обнаружение попыток подбора паролей</h2>
+<ul>
+<li>Анализ журналов аутентификации.</li>
+<li>Признаки: множество неудачных входов, перебор разных учетных
+записей, успешный вход после серии ошибок.</li>
+<li>Ограничение: большой объем обычных событий затрудняет выявление
+атак.</li>
+</ul>
+</section></section>
+<section>
+<section id="honeypot-как-средство-обнаружения-и-анализа-атак"
+class="title-slide slide level1">
+<h1>2. HONEYPOT КАК СРЕДСТВО ОБНАРУЖЕНИЯ И АНАЛИЗА АТАК</h1>
+
+</section>
+<section id="понятие-и-назначение-honeypot" class="slide level2">
+<h2>Понятие и назначение Honeypot</h2>
+<ul>
+<li>Имитация реальной системы или сетевой службы.</li>
+<li>Не используется для выполнения рабочих задач организации.</li>
+<li>Фиксирует обращения и действия потенциального злоумышленника.</li>
+<li>Может имитировать SSH-сервер, веб-панель или другую службу
+аутентификации.</li>
+</ul>
+</section>
+<section id="классификация-honeypot" class="slide level2">
+<h2>Классификация Honeypot</h2>
+<ul>
+<li><strong>Низкое взаимодействие:</strong> имитация ограниченного
+набора служб.</li>
+<li><strong>Среднее взаимодействие:</strong> ограниченные действия в
+имитируемой среде.</li>
+<li><strong>Высокое взаимодействие:</strong> реалистичная среда для
+подробного наблюдения.</li>
+</ul>
+<figure>
+<img data-src="image/2.PNG" style="width:75.0%"
+alt="Сравнение типов Honeypot по уровню взаимодействия" />
+<figcaption aria-hidden="true">Сравнение типов Honeypot по уровню
+взаимодействия</figcaption>
+</figure>
+</section>
+<section id="принцип-работы-при-обнаружении-brute-force"
+class="slide level2">
+<h2>Принцип работы при обнаружении Brute Force</h2>
+<ol type="1">
+<li>Размещение ловушки в отдельном сетевом сегменте.</li>
+<li>Регистрация подключений и попыток аутентификации.</li>
+<li>Сохранение адресов, времени, логинов и паролей.</li>
+<li>Анализ команд и дальнейших действий атакующего.</li>
+</ol>
+</section>
+<section id="программные-средства-cowrie" class="slide level2">
+<h2>Программные средства: Cowrie</h2>
+<ul>
+<li>Honeypot для SSH и Telnet.</li>
+<li>Регистрирует Brute Force атаки и команды.</li>
+<li>Имитирует файловую систему и ограниченную оболочку.</li>
+<li>Сохраняет журналы сеансов и загружаемые файлы.</li>
+</ul>
+</section>
+<section id="преимущества-и-ограничения-honeypot" class="slide level2">
+<h2>Преимущества и ограничения Honeypot</h2>
+<p><strong>Преимущества:</strong> - выделение подозрительной активности;
+- сбор сведений о методах атакующего; - потенциально меньше ложных
+срабатываний.</p>
+<p><strong>Ограничения:</strong> - не гарантирует обнаружение всех атак;
+- не защищает реальные учетные записи самостоятельно; - требует изоляции
+и безопасного сопровождения.</p>
+</section></section>
+<section>
+<section id="комплексный-подход-к-использованию-honeypot"
+class="title-slide slide level1">
+<h1>3. КОМПЛЕКСНЫЙ ПОДХОД К ИСПОЛЬЗОВАНИЮ HONEYPOT</h1>
+
+</section>
+<section id="выбор-конфигурации" class="slide level2">
+<h2>Выбор конфигурации</h2>
+<ul>
+<li>Определение наиболее атакуемых сетевых служб.</li>
+<li>Выделенный SSH Honeypot на базе Cowrie.</li>
+<li>Размещение в изолированном сегменте.</li>
+<li>Отсутствие реальных учетных данных и конфиденциальной
+информации.</li>
+</ul>
+</section>
+<section id="многоуровневая-система-защиты" class="slide level2">
+<h2>Многоуровневая система защиты</h2>
+<p><strong>1. Размещение:</strong> изолированный сегмент и контроль
+межсетевым экраном.</p>
+<p><strong>2. Регистрация:</strong> фиксация подключений, попыток входа
+и действий.</p>
+<p><strong>3. Анализ:</strong> централизованный сбор журналов и
+оповещение администратора.</p>
+<p><strong>4. Противодействие:</strong> MFA, надежные пароли,
+ограничение запросов и блокировка подозрительных подключений.</p>
+<figure>
+<img data-src="image/3.PNG" style="width:72.0%"
+alt="Последовательность обнаружения Brute Force атаки с помощью Honeypot" />
+<figcaption aria-hidden="true">Последовательность обнаружения Brute
+Force атаки с помощью Honeypot</figcaption>
+</figure>
+</section>
+<section id="организационные-меры-и-оценка-эффективности"
+class="slide level2">
+<h2>Организационные меры и оценка эффективности</h2>
+<p><strong>Организационные меры:</strong> - назначение ответственных
+сотрудников; - защищенное хранение журналов; - план реагирования на
+инциденты; - контроль сетевой изоляции.</p>
+<p><strong>Критерии оценки:</strong> - число обнаруженных попыток
+подбора; - время до формирования оповещения; - полнота журналирования; -
+корректность оповещений.</p>
+<figure>
+<img data-src="image/4.PNG" style="width:72.0%"
+alt="Условное количество выявленных подозрительных событий до и после внедрения Honeypot" />
+<figcaption aria-hidden="true">Условное количество выявленных
+подозрительных событий до и после внедрения Honeypot</figcaption>
+</figure>
+</section></section>
+<section>
+<section id="анализ-и-практическая-значимость-достигнутых-результатов"
+class="title-slide slide level1">
+<h1>АНАЛИЗ И ПРАКТИЧЕСКАЯ ЗНАЧИМОСТЬ ДОСТИГНУТЫХ РЕЗУЛЬТАТОВ</h1>
+
+</section>
+<section id="анализ-и-практическая-значимость" class="slide level2">
+<h2>АНАЛИЗ И ПРАКТИЧЕСКАЯ ЗНАЧИМОСТЬ</h2>
+<ul>
+<li>Рассмотрены основные разновидности Brute Force атак.</li>
+<li>Проанализированы возможности Honeypot и Cowrie.</li>
+<li>Сформирован подход: изоляция, регистрация, анализ, оповещение и
+противодействие.</li>
+<li>Гипотеза подтверждена на теоретическом уровне: Honeypot повышает
+обнаруживаемость атак в составе комплекса защиты.</li>
+</ul>
+</section></section>
+<section>
+<section id="общее-заключение-и-выводы"
+class="title-slide slide level1">
+<h1>ОБЩЕЕ ЗАКЛЮЧЕНИЕ И ВЫВОДЫ</h1>
+
+</section>
+<section id="общее-заключение-и-выводы-1" class="slide level2">
+<h2>ОБЩЕЕ ЗАКЛЮЧЕНИЕ И ВЫВОДЫ</h2>
+<ul>
+<li>Изучены механизмы подбора учетных данных.</li>
+<li>Рассмотрены виды и принцип работы Honeypot.</li>
+<li>Предложена многоуровневая схема его применения.</li>
+<li>Цель достигнута, задачи решены.</li>
+</ul>
+<p><strong>Вывод:</strong> Honeypot — дополнительный инструмент
+обнаружения и анализа атак. Его эффективность зависит от изоляции,
+настройки и интеграции с общей системой мониторинга.</p>
+</section></section>
+<section>
+<section id="список-использованных-источников"
+class="title-slide slide level1">
+<h1>СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ</h1>
+
+</section>
+<section id="список-использованных-источников-1" class="slide level2">
+<h2>СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ</h2>
+<ol type="1">
+<li>NIST. Honeypot — Glossary. URL:
+https://csrc.nist.gov/glossary/term/honeypot</li>
+<li>MITRE. Brute Force, Technique T1110. URL:
+https://attack.mitre.org/techniques/T1110/</li>
+<li>Oosterhof, M. Cowrie — SSH and Telnet Honeypot Documentation. URL:
+https://docs.cowrie.org/en/stable/README.html</li>
+<li>ENISA. Proactive Detection of Security Incidents: Honeypots. URL:
+https://www.enisa.europa.eu/sites/default/files/publications/ENISA_Honeypots_study.pdf</li>
+</ol>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^5/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^5/plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^5/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
